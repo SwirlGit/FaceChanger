@@ -2,7 +2,13 @@
 #define APPLICATIONMANAGER_H
 
 #include <QObject>
+#include <QVector>
 #include <memory>
+
+namespace BusinessLayer {
+class EffectImage;
+class FaceImage;
+}
 
 namespace ViewLayer {
 class ApplicationView;
@@ -33,9 +39,20 @@ public:
 
 private:
     /**
+     * @brief Обработка кадра с камеры
+     */
+    void processFrame();
+
+private:
+    /**
      * @brief Представление приложения
      */
     std::unique_ptr<ViewLayer::ApplicationView> m_view;
+
+    /**
+     * @brief Эффекты приложения
+     */
+    QVector<BusinessLayer::EffectImage*> m_effects;
 };
 
 } // namespace ManagementLayer

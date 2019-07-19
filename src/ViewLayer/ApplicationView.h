@@ -19,6 +19,22 @@ public:
     explicit ApplicationView(QWidget* parent = nullptr);
     ~ApplicationView();
 
+    /**
+     * @brief Установить изображения эффектов
+     */
+    void setupEffectsIcons(const QVector<QImage>& effectsIcons);
+
+    /**
+     * @brief Обновить изображение на экране
+     */
+    void updateImage(const QImage& image);
+
+signals:
+    /**
+     * @brief Изменился выбранный эффект
+     */
+    void currentEffectIndexChanged(int index);
+
 private:
     /**
      * @brief Скрытая имплементация представления
