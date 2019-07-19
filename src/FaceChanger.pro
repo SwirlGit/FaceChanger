@@ -15,11 +15,15 @@ RCC_DIR = resources
 SOURCES += \
     main.cpp \
     Application.cpp \
+    BusinessLayer/EffectImage.cpp \
+    BusinessLayer/FaceImage.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp
 
 HEADERS += \
     Application.h \
+    BusinessLayer/EffectImage.h \
+    BusinessLayer/FaceImage.h \
     ManagementLayer/ApplicationManager.h \
     ViewLayer/ApplicationView.h \
     ViewLayer/ApplicationViewPrivate.h
