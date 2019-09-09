@@ -18,7 +18,8 @@ SOURCES += \
     BusinessLayer/EffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
     ManagementLayer/ApplicationManager.cpp \
-    ViewLayer/ApplicationView.cpp
+    ViewLayer/ApplicationView.cpp \
+    _utils/Widgets/ItemsSlider/ItemsSlider.cpp
 
 HEADERS += \
     Application.h \
@@ -26,4 +27,5 @@ HEADERS += \
     BusinessLayer/FaceImage.h \
     ManagementLayer/ApplicationManager.h \
     ViewLayer/ApplicationView.h \
-    ViewLayer/ApplicationViewPrivate.h
+    ViewLayer/ApplicationViewPrivate.h \
+    _utils/Widgets/ItemsSlider/ItemsSlider.h
