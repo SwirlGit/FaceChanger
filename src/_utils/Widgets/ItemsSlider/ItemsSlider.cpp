@@ -36,23 +36,24 @@ ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
     layout->addWidget(m_toRight, 0, lastPositionAlign);
     setLayout(layout);
 
-    connect(m_items, QOverload<QAbstractButton*, bool>::of(&QButtonGroup::buttonToggled), this,
-                [this] (QAbstractButton* button, bool checked) {
-            Q_UNUSED(button);
-
-            if (checked) {
-                emit currentIndexChanged(currentIndex());
-            }
-        });
+    connect(m_items, static_cast<void (QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this,
+            [this] (QAbstractButton* button, bool checked) {
+        if (checked) {
+            button->setChecked(checked);
+            emit currentIndexChanged(currentIndex());
+        }
+    });
 
     connect(m_toLeft, &QPushButton::clicked, this, [this] () {
         const int tabsSize = m_items->buttons().size();
         const int nextButtonIndex = (currentIndex() == 0) ? tabsSize - 1 : currentIndex() - 1;
+        m_items->button(nextButtonIndex)->setChecked(true);
     });
 
     connect(m_toRight, &QPushButton::clicked, this, [this] () {
         const int tabsSize = m_items->buttons().size();
         const int nextButtonIndex = (currentIndex() >= tabsSize - 1) ? 0 : currentIndex() + 1;
+        m_items->button(nextButtonIndex)->setChecked(true);
     });
 }
 
