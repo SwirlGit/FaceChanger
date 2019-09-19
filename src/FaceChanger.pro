@@ -1,8 +1,10 @@
 QT       += core gui widgets
 CONFIG += c++14
 
-QMAKE_CXXFLAGS_DEBUG += -pg
-QMAKE_LFLAGS_DEBUG += -pg
+!android: {
+    QMAKE_CXXFLAGS_DEBUG += -pg
+    QMAKE_LFLAGS_DEBUG += -pg
+}
 
 TARGET = FaceChanger
 TEMPLATE = app
