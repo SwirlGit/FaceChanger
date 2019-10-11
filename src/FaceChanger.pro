@@ -22,22 +22,28 @@ LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
         -lopencv_imgcodecs412   \
         -lopencv_imgproc412     \
         -lopencv_features2d412  \
-        -lopencv_calib3d412
+        -lopencv_calib3d412     \
+        -lopencv_objdetect412
 
 SOURCES += \
     main.cpp \
     Application.cpp \
     BusinessLayer/EffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
+    BusinessLayer/FaceImageCreator.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp \
-    _utils/Widgets/ItemsSlider/ItemsSlider.cpp
+    _utils/Widgets/ItemsSlider/ItemsSlider.cpp \
+    _utils/Helpers/CVHelper.cpp
+
 
 HEADERS += \
     Application.h \
     BusinessLayer/EffectImage.h \
     BusinessLayer/FaceImage.h \
+    BusinessLayer/FaceImageCreator.h \
     ManagementLayer/ApplicationManager.h \
     ViewLayer/ApplicationView.h \
     ViewLayer/ApplicationViewPrivate.h \
-    _utils/Widgets/ItemsSlider/ItemsSlider.h
+    _utils/Widgets/ItemsSlider/ItemsSlider.h \
+    _utils/Helpers/CVHelper.h
