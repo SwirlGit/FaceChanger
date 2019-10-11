@@ -14,6 +14,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 MOC_DIR = moc
 RCC_DIR = resources
 
+INCLUDEPATH += $$(OPENCV_SDK_DIR)/include
+
+LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
+        -lopencv_core412        \
+        -lopencv_highgui412     \
+        -lopencv_imgcodecs412   \
+        -lopencv_imgproc412     \
+        -lopencv_features2d412  \
+        -lopencv_calib3d412
+
 SOURCES += \
     main.cpp \
     Application.cpp \
