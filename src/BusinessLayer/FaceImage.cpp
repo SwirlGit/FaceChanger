@@ -35,16 +35,14 @@ double Eye::radius() const
     return (m_width + m_height) * 0.25;
 }
 
-Face::Face() :
-    m_hasEyes(false)
+Face::Face()
 {
 }
 
 Face::Face(const QPointF& center, double width, double height) :
     m_center(center),
     m_width(width),
-    m_height(height),
-    m_hasEyes(false)
+    m_height(height)
 {
 }
 
@@ -68,16 +66,54 @@ double Face::radius() const
     return (m_width + m_height) * 0.25;
 }
 
-bool Face::hasEyes() const
+bool Face::hasLeftEye() const
 {
-    return m_hasEyes;
+    return m_hasLeftEye;
+}
+
+bool Face::hasRightEye() const
+{
+    return m_hasRightEye;
+}
+
+bool Face::hasBothEyes() const
+{
+    return m_hasBothEyes;
+}
+
+void Face::setLeftEye(const Eye& leftEye)
+{
+    m_leftEye = leftEye;
+    m_hasLeftEye = true;
+    if (m_hasRightEye) {
+        m_hasBothEyes = true;
+    }
+}
+
+void Face::setRightEye(const Eye& rightEye)
+{
+    m_rightEye = rightEye;
+    m_hasRightEye = true;
+    if (m_hasLeftEye) {
+        m_hasBothEyes = true;
+    }
 }
 
 void Face::setEyes(const BusinessLayer::Eye &leftEye, const BusinessLayer::Eye &rightEye)
 {
-    m_hasEyes = true;
-    m_leftEye = leftEye;
-    m_rightEye = rightEye;
+    setLeftEye(leftEye);
+    setRightEye(rightEye);
+    m_hasBothEyes = true;
+}
+
+Eye Face::leftEye()
+{
+    return m_leftEye;
+}
+
+Eye Face::rightEye()
+{
+    return m_rightEye;
 }
 
 QPair<BusinessLayer::Eye, BusinessLayer::Eye> Face::eyes() const

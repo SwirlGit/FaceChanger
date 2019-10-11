@@ -41,15 +41,23 @@ public:
     double height() const;
     double radius() const;
 
-    bool hasEyes() const;
+    bool hasLeftEye() const;
+    bool hasRightEye() const;
+    bool hasBothEyes() const;
+    void setLeftEye(const Eye& leftEye);
+    void setRightEye(const Eye& rightEye);
     void setEyes(const Eye& leftEye, const Eye& rightEye);
+    Eye leftEye();
+    Eye rightEye();
     QPair<Eye, Eye> eyes() const;
 
 private:
     QPointF m_center;
     double m_width;
     double m_height;
-    bool m_hasEyes;
+    bool m_hasLeftEye = false;
+    bool m_hasRightEye = false;
+    bool m_hasBothEyes = false;
     Eye m_leftEye;
     Eye m_rightEye;
 };
