@@ -3,6 +3,9 @@
 
 class QIcon;
 
+namespace BusinessLayer
+{
+
 /**
  * @brief Интерфейс для классов имеющих иконку
  */
@@ -12,7 +15,9 @@ public:
     /**
      * @brief Получить иконку изображения
      */
-    virtual QIcon icon() const;
+    virtual QIcon icon() const = 0;
 };
+
+} // namespace BusinessLayer
 
 #endif // IICONITEM_H

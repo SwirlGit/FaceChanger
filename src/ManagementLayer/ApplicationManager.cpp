@@ -3,14 +3,15 @@
 #include "Application.h"
 
 #include "BusinessLayer/EffectImage.h"
+#include "BusinessLayer/Effects/NoEffectImage.h"
 #include "BusinessLayer/FaceImage.h"
 #include "BusinessLayer/FaceImageCreator.h"
 #include "BusinessLayer/FrameCreator.h"
 #include "ViewLayer/ApplicationView.h"
 
+#include <QIcon>
 #include <QThread>
 
-using BusinessLayer::EffectImage;
 using ViewLayer::ApplicationView;
 
 namespace ManagementLayer
@@ -24,7 +25,7 @@ ApplicationManager::ApplicationManager(QObject* parent) :
     m_faceImageCreator = new BusinessLayer::OpenCVFaceImageCreator();
 
     // настраиваем ресивер изображений
-    m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30, this);
+    m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30);
     QThread frameCreatorThread;
     m_frameCreator->moveToThread(&frameCreatorThread);
     connect(m_frameCreator, &BusinessLayer::IFrameCreator::frameCaptured,
@@ -33,8 +34,7 @@ ApplicationManager::ApplicationManager(QObject* parent) :
             m_frameCreator, &BusinessLayer::IFrameCreator::start);
 
     // настраиваем набор эффектов
-    // TODO: m_effects.append(new EffectImageSomething())
-    // m_view->setupEffectsIcons(icons);
+    initEffects();
 
     // запускаем получатель изображений
     frameCreatorThread.start();
@@ -52,10 +52,21 @@ void ApplicationManager::exec()
     m_view->showMaximized();
 }
 
+void ApplicationManager::initEffects()
+{
+    QVector<QIcon> icons;
+
+    // Пустой эффект
+    BusinessLayer::NoEffectImage* noEffectImage = new BusinessLayer::NoEffectImage();
+    m_effects.append(noEffectImage);
+    icons.append(noEffectImage->icon());
+
+    m_view->setupEffectsIcons(icons);
+}
+
 void ApplicationManager::processFrame(const QImage& frame)
 {
-    Q_UNUSED(frame);
-    const QImage image;// = m_effects.at(currentEffect)->apply(m_faceImageCreator->createFaceImage(frame));
+    const QImage image = m_effects.at(m_currentEffect)->apply(m_faceImageCreator->createFaceImage(frame));
     m_view->updateImage(image);
 }
 
