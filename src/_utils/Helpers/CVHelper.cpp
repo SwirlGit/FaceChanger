@@ -33,3 +33,8 @@ Mat CVHelper::QImageToMat(const QImage& image)
     }
     return mat;
 }
+
+QImage CVHelper::MatToQImage(const Mat& mat)
+{
+    return QImage((uchar*) mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+}
