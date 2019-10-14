@@ -14,9 +14,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 MOC_DIR = moc
 RCC_DIR = resources
 
+### opencv
+!android: {
 INCLUDEPATH += $$(OPENCV_SDK_DIR)/include
-
-LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
+LIBS += -L$$(OPENCV_SDK_DIR)/x64/mingw/lib
+LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib
+LIBS += \
         -lopencv_core412        \
         -lopencv_highgui412     \
         -lopencv_imgcodecs412   \
@@ -25,6 +28,24 @@ LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
         -lopencv_calib3d412     \
         -lopencv_objdetect412   \
         -lopencv_videoio412
+} else {
+    OPENCV_CHECK = $$(OPENCV_ANDROID)
+    isEmpty(OPENCV_CHECK) {
+        error("Let OPENCV_ANDROID point to the opencv-android-sdk, recommended: v4.1.2")
+    }
+    INCLUDEPATH += $$(OPENCV_ANDROID)/sdk/native/jni/include
+    LIBS += \
+        -L$$(OPENCV_ANDROID)/sdk/native/libs/$$ANDROID_TARGET_ARCH \
+        -L$$(OPENCV_ANDROID)/sdk/native/3rdparty/libs/$$ANDROID_TARGET_ARCH \
+        -llibtiff \
+        -llibjpeg-turbo \
+        -llibjasper \
+        -llibpng \
+        -lIlmImf \
+        -ltbb \
+        -lopencv_java4 \
+}
+
 
 SOURCES += \
     main.cpp \

@@ -28,8 +28,8 @@ ApplicationManager::ApplicationManager(QObject* parent) :
     m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30);
     m_frameCreatorThread = new QThread;
     m_frameCreator->moveToThread(m_frameCreatorThread);
-    connect(m_frameCreator, &BusinessLayer::IFrameCreator::frameCaptured,
-            this, ApplicationManager::processFrame);
+    connect(m_frameCreator, SIGNAL(frameCaptured(const QImage&)),
+            this, SLOT(processFrame(const QImage&)));
     connect(m_frameCreatorThread, &QThread::started,
             m_frameCreator, &BusinessLayer::IFrameCreator::start);
 

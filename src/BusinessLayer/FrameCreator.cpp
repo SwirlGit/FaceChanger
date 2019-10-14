@@ -42,14 +42,14 @@ OpenCVFrameCreator::~OpenCVFrameCreator()
 
 void OpenCVFrameCreator::start()
 {
-    const int timeAtStartMs = QDateTime::currentMSecsSinceEpoch();
+    const qint64 timeAtStartMs = QDateTime::currentMSecsSinceEpoch();
 
     // Если устройство не захвачено, сообщаем об этом, пытаемся захватить и планируем повтор через секунду
     if (!m_videoCapture->isOpened()) {
         m_videoCapture->open(m_cameraIndex, CAP_ANY);
         static const QString errorString = "Video device is not opened, can not capture frame";
         qDebug() << errorString << endl;
-        QTimer::singleShot(kDefaultOpenDeviceRetryTimeout, this, OpenCVFrameCreator::start);
+        QTimer::singleShot(kDefaultOpenDeviceRetryTimeout, this, SLOT(start()));
         return;
     }
 
@@ -61,7 +61,8 @@ void OpenCVFrameCreator::start()
     }
 
     // Планируем следующий вызов исходя из установленного fps и потраченного времени
-    QTimer::singleShot(m_captureTimeoutMs - (QDateTime::currentMSecsSinceEpoch() - timeAtStartMs), this, OpenCVFrameCreator::start);
+    QTimer::singleShot(static_cast<int>(m_captureTimeoutMs - (QDateTime::currentMSecsSinceEpoch() - timeAtStartMs)),
+                       this, SLOT(start()));
 }
 
 } // namespace BusinessLayer
