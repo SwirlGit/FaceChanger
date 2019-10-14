@@ -1,11 +1,11 @@
 #ifndef EFFECTIMAGE_H
 #define EFFECTIMAGE_H
 
-class FaceImage;
 class QImage;
 
 namespace BusinessLayer
 {
+class FaceImage;
 
 /**
  * @brief Интерфейс эффектов
