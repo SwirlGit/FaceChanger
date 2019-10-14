@@ -61,7 +61,7 @@ private:
     /**
      * @brief Задержка между получением кадров
      */
-    int m_captureTimeoutMs;
+    qint64 m_captureTimeoutMs;
 };
 
 } // namespace BusinessLayer
