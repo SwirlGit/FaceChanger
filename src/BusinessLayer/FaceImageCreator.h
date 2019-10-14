@@ -19,6 +19,8 @@ namespace BusinessLayer
 class IFaceImageCreator
 {
 public:
+    virtual ~IFaceImageCreator() = default;
+
     /**
      * @brief Чистая функция для поиска лица на изображении
      */

@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <memory>
 
+class QIcon;
+
 namespace ViewLayer
 {
 struct ApplicationViewPrivate;
@@ -22,7 +24,7 @@ public:
     /**
      * @brief Установить изображения эффектов
      */
-    void setupEffectsIcons(const QVector<QImage>& effectsIcons);
+    void setupEffectsIcons(const QVector<QIcon>& effectsIcons);
 
     /**
      * @brief Обновить изображение на экране

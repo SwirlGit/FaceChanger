@@ -6,8 +6,9 @@
 #include <memory>
 
 class QImage;
+class QThread;
 namespace BusinessLayer {
-class EffectImage;
+class IEffectImage;
 class FaceImage;
 class IFaceImageCreator;
 class IFrameCreator;
@@ -42,6 +43,11 @@ public:
 
 private:
     /**
+     * @brief Инициализировать эффекты
+     */
+    void initEffects();
+
+    /**
      * @brief Обработка кадра с камеры
      */
     void processFrame(const QImage& frame);
@@ -55,7 +61,12 @@ private:
     /**
      * @brief Эффекты приложения
      */
-    QVector<BusinessLayer::EffectImage*> m_effects;
+    QVector<BusinessLayer::IEffectImage*> m_effects;
+
+    /**
+     * @brief Текущий выбранный эффект
+     */
+    int m_currentEffect = 0;
 
     /**
      * @brief Определитель лица на фотографии
@@ -63,9 +74,14 @@ private:
     BusinessLayer::IFaceImageCreator* m_faceImageCreator = nullptr;
 
     /**
-     * @brief Получатель изображений
+     * @brief Ресивер изображений
      */
     BusinessLayer::IFrameCreator* m_frameCreator = nullptr;
+
+    /**
+     * @brief Тред для ресивера изображений
+     */
+    QThread* m_frameCreatorThread = nullptr;
 };
 
 } // namespace ManagementLayer

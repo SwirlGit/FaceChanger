@@ -1,11 +1,11 @@
 #ifndef EFFECTIMAGE_H
 #define EFFECTIMAGE_H
 
-class FaceImage;
 class QImage;
 
 namespace BusinessLayer
 {
+class FaceImage;
 
 /**
  * @brief Интерфейс эффектов
@@ -13,6 +13,11 @@ namespace BusinessLayer
 class IEffectImage
 {
 public:
+    virtual ~IEffectImage() = default;
+
+    /**
+     * @brief Применить эффект
+     */
     virtual QImage apply(const FaceImage& faceImage) const = 0;
 };
 

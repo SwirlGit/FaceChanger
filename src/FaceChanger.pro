@@ -29,7 +29,7 @@ LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
 SOURCES += \
     main.cpp \
     Application.cpp \
-    BusinessLayer/EffectImage.cpp \
+    BusinessLayer/Effects/NoEffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
     BusinessLayer/FaceImageCreator.cpp \
     BusinessLayer/FrameCreator.cpp \
@@ -42,6 +42,7 @@ SOURCES += \
 HEADERS += \
     Application.h \
     BusinessLayer/EffectImage.h \
+    BusinessLayer/Effects/NoEffectImage.h \
     BusinessLayer/FaceImage.h \
     BusinessLayer/FaceImageCreator.h \
     BusinessLayer/FrameCreator.h \
@@ -49,4 +50,5 @@ HEADERS += \
     ViewLayer/ApplicationView.h \
     ViewLayer/ApplicationViewPrivate.h \
     _utils/Widgets/ItemsSlider/ItemsSlider.h \
-    _utils/Helpers/CVHelper.h
+    _utils/Helpers/CVHelper.h \
+    BusinessLayer/IconItem.h

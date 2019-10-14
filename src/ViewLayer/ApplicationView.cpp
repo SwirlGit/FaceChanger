@@ -24,7 +24,7 @@ ApplicationView::~ApplicationView()
 {
 }
 
-void ApplicationView::setupEffectsIcons(const QVector<QImage>& effectsIcons)
+void ApplicationView::setupEffectsIcons(const QVector<QIcon>& effectsIcons)
 {
     //TODO:
     //m_pimpl->effectsWidget->setIcons(effectsIcons);
