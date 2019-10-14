@@ -6,6 +6,7 @@
 #include <memory>
 
 class QImage;
+class QThread;
 namespace BusinessLayer {
 class IEffectImage;
 class FaceImage;
@@ -73,9 +74,14 @@ private:
     BusinessLayer::IFaceImageCreator* m_faceImageCreator = nullptr;
 
     /**
-     * @brief Получатель изображений
+     * @brief Ресивер изображений
      */
     BusinessLayer::IFrameCreator* m_frameCreator = nullptr;
+
+    /**
+     * @brief Тред для ресивера изображений
+     */
+    QThread* m_frameCreatorThread = nullptr;
 };
 
 } // namespace ManagementLayer

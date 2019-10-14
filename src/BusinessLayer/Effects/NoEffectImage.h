@@ -14,6 +14,8 @@ class FaceImage;
 class NoEffectImage : public IEffectImage, public IIconItem
 {
 public:
+    ~NoEffectImage() override final;
+
     /**
      * @brief Применить эффект
      */

@@ -13,6 +13,11 @@ class FaceImage;
 class IEffectImage
 {
 public:
+    virtual ~IEffectImage() = default;
+
+    /**
+     * @brief Применить эффект
+     */
     virtual QImage apply(const FaceImage& faceImage) const = 0;
 };
 

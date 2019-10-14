@@ -26,21 +26,28 @@ ApplicationManager::ApplicationManager(QObject* parent) :
 
     // настраиваем ресивер изображений
     m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30);
-    QThread frameCreatorThread;
-    m_frameCreator->moveToThread(&frameCreatorThread);
+    m_frameCreatorThread = new QThread;
+    m_frameCreator->moveToThread(m_frameCreatorThread);
     connect(m_frameCreator, &BusinessLayer::IFrameCreator::frameCaptured,
             this, ApplicationManager::processFrame);
-    connect(&frameCreatorThread, &QThread::started,
+    connect(m_frameCreatorThread, &QThread::started,
             m_frameCreator, &BusinessLayer::IFrameCreator::start);
 
     // настраиваем набор эффектов
     initEffects();
 
     // запускаем получатель изображений
-    frameCreatorThread.start();
+    m_frameCreatorThread->start();
 }
 
-ApplicationManager::~ApplicationManager() = default;
+ApplicationManager::~ApplicationManager()
+{
+    m_frameCreatorThread->exit();
+    delete m_frameCreator;
+    delete m_faceImageCreator;
+    qDeleteAll(m_effects);
+    m_view.release();
+}
 
 QWidget* ApplicationManager::view() const
 {

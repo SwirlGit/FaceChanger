@@ -8,6 +8,10 @@
 namespace BusinessLayer
 {
 
+NoEffectImage::~NoEffectImage()
+{
+}
+
 QImage NoEffectImage::apply(const FaceImage& faceImage) const
 {
     return faceImage.image();

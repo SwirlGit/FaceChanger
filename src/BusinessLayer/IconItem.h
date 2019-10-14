@@ -12,6 +12,8 @@ namespace BusinessLayer
 class IIconItem
 {
 public:
+    virtual ~IIconItem() = default;
+
     /**
      * @brief Получить иконку изображения
      */
