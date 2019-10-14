@@ -31,6 +31,7 @@ SOURCES += \
     BusinessLayer/EffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
     BusinessLayer/FaceImageCreator.cpp \
+    BusinessLayer/FrameCreator.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp \
     _utils/Widgets/ItemsSlider/ItemsSlider.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     BusinessLayer/EffectImage.h \
     BusinessLayer/FaceImage.h \
     BusinessLayer/FaceImageCreator.h \
+    BusinessLayer/FrameCreator.h \
     ManagementLayer/ApplicationManager.h \
     ViewLayer/ApplicationView.h \
     ViewLayer/ApplicationViewPrivate.h \
