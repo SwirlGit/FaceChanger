@@ -1,8 +1,7 @@
 #include "FaceImage.h"
 
-using BusinessLayer::Eye;
-using BusinessLayer::Face;
-using BusinessLayer::FaceImage;
+namespace BusinessLayer
+{
 
 Eye::Eye()
 {
@@ -149,3 +148,5 @@ QVector<BusinessLayer::Face> FaceImage::faces() const
 {
     return m_faces;
 }
+
+} // namespace BusinessLayer
