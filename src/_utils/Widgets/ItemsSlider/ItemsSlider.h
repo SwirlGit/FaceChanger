@@ -23,7 +23,7 @@ public:
     /**
      * @brief Установить иконки
      */
-    void setupItemsIcons(QVector<QIcon> &icons);
+    void setupItemsIcons(const QVector<QIcon>& icons);
 
 signals:
     /**

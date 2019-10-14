@@ -62,7 +62,7 @@ int ItemsSlider::currentIndex()
     return itemsLayout()->indexOf(m_items->checkedButton());
 }
 
-void ItemsSlider::setupItemsIcons(QVector<QIcon>& icons)
+void ItemsSlider::setupItemsIcons(const QVector<QIcon> &icons)
 {
     for (int i = 0; i < icons.size(); ++i) {
         QPushButton* button = new QPushButton(m_scroll);
@@ -75,5 +75,5 @@ void ItemsSlider::setupItemsIcons(QVector<QIcon>& icons)
 
 QBoxLayout* ItemsSlider::itemsLayout()
 {
-    return qobject_cast<QBoxLayout*>(m_scroll->widget()->layout());
+    return qobject_cast<QBoxLayout*>(m_scroll->layout());
 }
