@@ -5,9 +5,12 @@
 #include <QVector>
 #include <memory>
 
+class QImage;
 namespace BusinessLayer {
 class EffectImage;
 class FaceImage;
+class IFaceImageCreator;
+class IFrameCreator;
 }
 
 namespace ViewLayer {
@@ -41,7 +44,7 @@ private:
     /**
      * @brief Обработка кадра с камеры
      */
-    void processFrame();
+    void processFrame(const QImage& frame);
 
 private:
     /**
@@ -53,6 +56,16 @@ private:
      * @brief Эффекты приложения
      */
     QVector<BusinessLayer::EffectImage*> m_effects;
+
+    /**
+     * @brief Определитель лица на фотографии
+     */
+    BusinessLayer::IFaceImageCreator* m_faceImageCreator = nullptr;
+
+    /**
+     * @brief Получатель изображений
+     */
+    BusinessLayer::IFrameCreator* m_frameCreator = nullptr;
 };
 
 } // namespace ManagementLayer
