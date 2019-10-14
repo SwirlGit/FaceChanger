@@ -6,8 +6,10 @@
 #include "BusinessLayer/FaceImage.h"
 #include "ViewLayer/ApplicationView.h"
 
-using ManagementLayer::ApplicationManager;
 using ViewLayer::ApplicationView;
+
+namespace ManagementLayer
+{
 
 ApplicationManager::ApplicationManager(QObject* parent) :
     QObject(parent),
@@ -32,3 +34,5 @@ void ApplicationManager::processFrame()
 {
 
 }
+
+} // namespace ManagementLayer

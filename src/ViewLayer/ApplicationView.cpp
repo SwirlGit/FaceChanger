@@ -1,9 +1,8 @@
 #include "ApplicationView.h"
 #include "ApplicationViewPrivate.h"
 
-using ViewLayer::ApplicationViewPrivate;
-using ViewLayer::ApplicationView;
-
+namespace ViewLayer
+{
 
 ApplicationViewPrivate::ApplicationViewPrivate()
 {
@@ -36,3 +35,5 @@ void ApplicationView::updateImage(const QImage& image)
     //TODO:
     //m_pimpl->mainFrame->setImage(image);
 }
+
+} // namespace ViewLayer

@@ -12,10 +12,9 @@
 #include <opencv2/objdetect/objdetect.hpp>
 
 using namespace cv;
-using BusinessLayer::Eye;
-using BusinessLayer::Face;
-using BusinessLayer::FaceImage;
-using BusinessLayer::OpenCVFaceImageCreator;
+
+namespace BusinessLayer
+{
 
 OpenCVFaceImageCreator::OpenCVFaceImageCreator()
 {
@@ -106,3 +105,5 @@ void OpenCVFaceImageCreator::logErrorString(const QString& errorString) const
     static const QString logPrefix = "OpenCVFaceImageCreator: ";
     qDebug() << logPrefix << errorString << endl;
 }
+
+} // namespace BusinessLayer

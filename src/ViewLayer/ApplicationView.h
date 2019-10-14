@@ -41,7 +41,7 @@ private:
      */
     std::unique_ptr<ApplicationViewPrivate> m_pimpl;
 };
-}
+} // ViewLayers
 
 #endif // APPLICATION_VIEW_H
 
