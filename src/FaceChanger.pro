@@ -23,7 +23,8 @@ LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
         -lopencv_imgproc412     \
         -lopencv_features2d412  \
         -lopencv_calib3d412     \
-        -lopencv_objdetect412
+        -lopencv_objdetect412   \
+        -lopencv_videoio412
 
 SOURCES += \
     main.cpp \
