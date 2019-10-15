@@ -47,6 +47,7 @@ private:
      */
     void initEffects();
 
+private slots:
     /**
      * @brief Обработка кадра с камеры
      */
