@@ -1,0 +1,11 @@
+/*
+ * Виджеты из _utils Widgets
+ */
+
+#itemsSlider QWidget {
+    background-color: rgba(0,0,0,0);
+}
+
+#itemsSlider QPushButton {
+    background-color: rgb(255,0,0);
+}
