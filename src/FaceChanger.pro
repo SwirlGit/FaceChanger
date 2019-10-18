@@ -77,3 +77,6 @@ HEADERS += \
     _utils/Widgets/ItemsSlider/ItemsSlider.h \
     _utils/Helpers/CVHelper.h \
     BusinessLayer/IconItem.h
+
+RESOURCES += \
+    Resources/resources.qrc

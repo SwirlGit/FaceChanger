@@ -37,6 +37,11 @@ private:
      */
     QBoxLayout* itemsLayout();
 
+    /**
+     * @brief Установить текущий элемент
+     */
+    void setCurrentIndex(int index);
+
 private:
 
     /**

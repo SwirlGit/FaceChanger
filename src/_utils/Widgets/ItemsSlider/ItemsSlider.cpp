@@ -1,9 +1,16 @@
 #include "ItemsSlider.h"
 
+#include <QBoxLayout>
 #include <QButtonGroup>
 #include <QPushButton>
 #include <QScrollArea>
-#include <QBoxLayout>
+#include <QVariant>
+
+namespace
+{
+// Свойство "выбрана"
+const char* kPropertyChecked = "isChecked";
+}
 
 ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
     QWidget(parent),
@@ -14,6 +21,8 @@ ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
     m_orientation(orientation),
     m_currentIndex(-1)
 {
+    setObjectName("itemsSlider");
+
     QBoxLayout* layout;
     QBoxLayout* itemsLayout;
     Qt::AlignmentFlag firstPositionAlign;
@@ -39,27 +48,31 @@ ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
     connect(m_items, static_cast<void (QButtonGroup::*)(QAbstractButton*, bool)>(&QButtonGroup::buttonToggled), this,
             [this] (QAbstractButton* button, bool checked) {
         if (checked) {
-            button->setChecked(checked);
+            setCurrentIndex(m_items->id(button));
             emit currentIndexChanged(currentIndex());
         }
     });
 
     connect(m_toLeft, &QPushButton::clicked, this, [this] () {
-        const int tabsSize = m_items->buttons().size();
-        const int nextButtonIndex = (currentIndex() == 0) ? tabsSize - 1 : currentIndex() - 1;
-        m_items->button(nextButtonIndex)->setChecked(true);
+        const int index = currentIndex();
+        if (index > 0) {
+            setCurrentIndex(index - 1);
+        }
+
     });
 
     connect(m_toRight, &QPushButton::clicked, this, [this] () {
         const int tabsSize = m_items->buttons().size();
-        const int nextButtonIndex = (currentIndex() >= tabsSize - 1) ? 0 : currentIndex() + 1;
-        m_items->button(nextButtonIndex)->setChecked(true);
+        const int index = currentIndex();
+        if (index < tabsSize - 1) {
+            setCurrentIndex(index + 1);
+        }
     });
 }
 
 int ItemsSlider::currentIndex()
 {
-    return itemsLayout()->indexOf(m_items->checkedButton());
+    return m_currentIndex;
 }
 
 void ItemsSlider::setupItemsIcons(const QVector<QIcon> &icons)
@@ -68,12 +81,31 @@ void ItemsSlider::setupItemsIcons(const QVector<QIcon> &icons)
         QPushButton* button = new QPushButton(m_scroll);
         button->setIcon(icons[i]);
         button->setCheckable(true);
-        m_items->addButton(button);
+        m_items->addButton(button, i);
         itemsLayout()->insertWidget(itemsLayout()->count() - 1, button);
+    }
+    if (icons.size() > 0) {
+        setCurrentIndex(0);
     }
 }
 
 QBoxLayout* ItemsSlider::itemsLayout()
 {
     return qobject_cast<QBoxLayout*>(m_scroll->layout());
+}
+
+void ItemsSlider::setCurrentIndex(int index)
+{
+    if ((index < 0) || (index >= m_items->buttons().size())) {
+        Q_ASSERT_X(false, "ItemsSlider::setCurrentIndex", "invalidIndex");
+        return;
+    }
+
+    if (m_currentIndex >= 0 && m_currentIndex < m_items->buttons().size()) {
+        m_items->button(m_currentIndex)->setChecked(false);
+        m_items->button(m_currentIndex)->setProperty(kPropertyChecked, false);
+    }
+    m_items->button(index)->setChecked(true);
+    m_items->button(index)->setProperty(kPropertyChecked, true);
+    m_currentIndex = index;
 }
