@@ -23,9 +23,14 @@ ApplicationView::ApplicationView(QWidget* parent) :
 {
     setObjectName("applicationView");
 
+    QHBoxLayout* itemsSliderLayout = new QHBoxLayout;
+    itemsSliderLayout->addStretch();
+    itemsSliderLayout->addWidget(m_pimpl->effects);
+    itemsSliderLayout->addStretch();
+
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addStretch();
-    layout->addWidget(m_pimpl->effects);
+    layout->addLayout(itemsSliderLayout);
     setLayout(layout);
 
     connect(m_pimpl->effects, &ItemsSlider::currentIndexChanged, this, &ApplicationView::currentEffectIndexChanged);

@@ -38,6 +38,9 @@ ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
         firstPositionAlign = Qt::AlignTop;
         lastPositionAlign = Qt::AlignBottom;
     }
+    itemsLayout->addStretch();
+    itemsLayout->addStretch();
+    m_scroll->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Minimum);
     m_scroll->setLayout(itemsLayout);
 
     layout->addWidget(m_toLeft, 0, firstPositionAlign);
