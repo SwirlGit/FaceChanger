@@ -2,6 +2,7 @@
 
 #include "ManagementLayer/ApplicationManager.h"
 
+#include <QFile>
 #include <QFont>
 #include <QPalette>
 #include <QProcess>
@@ -39,6 +40,11 @@ void Application::initUI()
     // Загрузка стилей
     setStyle(QStyleFactory::create("Fusion"));
 
+    QFile styleSheetFile(":/Design/UI/stylesheet.qss");
+    if (styleSheetFile.open(QIODevice::ReadOnly)) {
+        setStyleSheet(styleSheetFile.readAll());
+        styleSheetFile.close();
+    }
     QPalette palette = QStyleFactory::create("Fusion")->standardPalette();
     palette.setColor(QPalette::Window, QColor("#182038"));
     palette.setColor(QPalette::WindowText, QColor("#ebebeb"));

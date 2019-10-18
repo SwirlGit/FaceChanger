@@ -1,0 +1,22 @@
+/*
+ * Виджеты из _utils Widgets
+ */
+
+#itemsSlider QWidget {
+    background-color: rgba(0,0,0,0);
+}
+
+#itemsSlider QPushButton {
+    background-color: rgba(0,0,0,255);
+    border-color: rgba(66, 69, 183, 255);
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 20px;
+    margin: 30px;
+    width: 50px;
+    height: 50px;
+}
+
+#itemsSlider QPushButton[isChecked=true] {
+    border-color: rgba(255, 255, 255, 255)
+}

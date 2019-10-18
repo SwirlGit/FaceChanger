@@ -23,7 +23,7 @@ public:
     /**
      * @brief Установить иконки
      */
-    void setupItemsIcons(QVector<QIcon> &icons);
+    void setupItemsIcons(const QVector<QIcon>& icons);
 
 signals:
     /**
@@ -36,6 +36,11 @@ private:
      * @brief Layout элементов
      */
     QBoxLayout* itemsLayout();
+
+    /**
+     * @brief Установить текущий элемент
+     */
+    void setCurrentIndex(int index);
 
 private:
 

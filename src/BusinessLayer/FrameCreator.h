@@ -21,6 +21,7 @@ class IFrameCreator : public QObject
 public:
     explicit IFrameCreator(QObject* parent = nullptr);
 
+public slots:
     /**
      * @brief Запустить получение изображений, следует запускать в другом потоке
      */
@@ -38,10 +39,13 @@ signals:
  */
 class OpenCVFrameCreator : public IFrameCreator
 {
+    Q_OBJECT
+
 public:
     explicit OpenCVFrameCreator(int cameraIndex, int fps = 30, QObject *parent = nullptr);
     ~OpenCVFrameCreator();
 
+public slots:
     /**
      * @brief Запустить получение изображений, следует запускать в другом потоке
      */

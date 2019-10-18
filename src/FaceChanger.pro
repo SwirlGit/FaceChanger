@@ -1,4 +1,4 @@
-QT       += core gui widgets
+QT     += core gui widgets
 CONFIG += c++14
 
 !android: {
@@ -16,10 +16,14 @@ RCC_DIR = resources
 
 ### opencv
 !android: {
-INCLUDEPATH += $$(OPENCV_SDK_DIR)/include
-LIBS += -L$$(OPENCV_SDK_DIR)/x64/mingw/lib
-LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib
-LIBS += \
+    OPENCV_CHECK = $$(OPENCV_SDK_DIR)
+    isEmpty(OPENCV_CHECK) {
+        error("Let OPENCV_SDK_DIR point to the opencv-sdk, using: v4.1.2")
+    }
+    INCLUDEPATH += $$(OPENCV_SDK_DIR)/include
+    LIBS += -L$$(OPENCV_SDK_DIR)/x64/mingw/lib
+    LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib
+    LIBS += \
         -lopencv_core412        \
         -lopencv_highgui412     \
         -lopencv_imgcodecs412   \
@@ -31,7 +35,7 @@ LIBS += \
 } else {
     OPENCV_CHECK = $$(OPENCV_ANDROID)
     isEmpty(OPENCV_CHECK) {
-        error("Let OPENCV_ANDROID point to the opencv-android-sdk, recommended: v4.1.2")
+        error("Let OPENCV_ANDROID point to the opencv-android-sdk, using: v4.1.2")
     }
     INCLUDEPATH += $$(OPENCV_ANDROID)/sdk/native/jni/include
     LIBS += \
@@ -73,3 +77,6 @@ HEADERS += \
     _utils/Widgets/ItemsSlider/ItemsSlider.h \
     _utils/Helpers/CVHelper.h \
     BusinessLayer/IconItem.h
+
+RESOURCES += \
+    Resources/resources.qrc

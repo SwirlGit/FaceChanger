@@ -1,6 +1,9 @@
 #ifndef APPLICATION_VIEW_PRIVATE_H
 #define APPLICATION_VIEW_PRIVATE_H
 
+class ItemsSlider;
+class QWidget;
+
 namespace ViewLayer
 {
 /**
@@ -8,9 +11,14 @@ namespace ViewLayer
  */
 struct ApplicationViewPrivate
 {
-    ApplicationViewPrivate();
+    ApplicationViewPrivate(QWidget* parent = nullptr);
     ApplicationViewPrivate(const ApplicationViewPrivate&) = delete;
     void operator=(const ApplicationViewPrivate&) = delete;
+
+    /**
+     * @brief Установленные эффекты
+     */
+    ItemsSlider* effects = nullptr;
 };
 }
 

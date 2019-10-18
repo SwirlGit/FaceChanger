@@ -1,6 +1,7 @@
 #ifndef APPLICATION_VIEW_H
 #define APPLICATION_VIEW_H
 
+#include <QImage>
 #include <QWidget>
 #include <memory>
 
@@ -39,9 +40,20 @@ signals:
 
 private:
     /**
+     * @brief Отображение кадра
+     */
+    void paintEvent(QPaintEvent* event);
+
+private:
+    /**
      * @brief Скрытая имплементация представления
      */
     std::unique_ptr<ApplicationViewPrivate> m_pimpl;
+
+    /**
+     * @brief Текущий кадр
+     */
+    QImage m_imageToDraw;
 };
 } // ViewLayers
 
