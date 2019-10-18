@@ -47,8 +47,8 @@ public:
     void setLeftEye(const Eye& leftEye);
     void setRightEye(const Eye& rightEye);
     void setEyes(const Eye& leftEye, const Eye& rightEye);
-    Eye leftEye();
-    Eye rightEye();
+    Eye leftEye() const;
+    Eye rightEye() const;
     QPair<Eye, Eye> eyes() const;
 
 private:

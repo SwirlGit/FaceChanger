@@ -58,10 +58,12 @@ SOURCES += \
     BusinessLayer/FaceImage.cpp \
     BusinessLayer/FaceImageCreator.cpp \
     BusinessLayer/FrameCreator.cpp \
+    BusinessLayer/Effects/SimpleCirclesEffectImage.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp \
     _utils/Widgets/ItemsSlider/ItemsSlider.cpp \
-    _utils/Helpers/CVHelper.cpp
+    _utils/Helpers/CVHelper.cpp \
+    _utils/Helpers/UIHelper.cpp
 
 
 HEADERS += \
@@ -71,12 +73,15 @@ HEADERS += \
     BusinessLayer/FaceImage.h \
     BusinessLayer/FaceImageCreator.h \
     BusinessLayer/FrameCreator.h \
+    BusinessLayer/IconItem.h \
+    BusinessLayer/Effects/SimpleCirclesEffectImage.h \
     ManagementLayer/ApplicationManager.h \
     ViewLayer/ApplicationView.h \
     ViewLayer/ApplicationViewPrivate.h \
     _utils/Widgets/ItemsSlider/ItemsSlider.h \
     _utils/Helpers/CVHelper.h \
-    BusinessLayer/IconItem.h
+    _utils/Helpers/UIHelper.h
+
 
 RESOURCES += \
     Resources/resources.qrc

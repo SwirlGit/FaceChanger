@@ -105,12 +105,12 @@ void Face::setEyes(const BusinessLayer::Eye &leftEye, const BusinessLayer::Eye &
     m_hasBothEyes = true;
 }
 
-Eye Face::leftEye()
+Eye Face::leftEye() const
 {
     return m_leftEye;
 }
 
-Eye Face::rightEye()
+Eye Face::rightEye() const
 {
     return m_rightEye;
 }
