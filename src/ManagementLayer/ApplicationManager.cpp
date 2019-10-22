@@ -4,6 +4,7 @@
 
 #include "BusinessLayer/EffectImage.h"
 #include "BusinessLayer/Effects/NoEffectImage.h"
+#include "BusinessLayer/Effects/SimpleCirclesEffectImage.h"
 #include "BusinessLayer/FaceImage.h"
 #include "BusinessLayer/FaceImageCreator.h"
 #include "BusinessLayer/FrameCreator.h"
@@ -67,6 +68,11 @@ void ApplicationManager::initEffects()
     BusinessLayer::NoEffectImage* noEffectImage = new BusinessLayer::NoEffectImage();
     m_effects.append(noEffectImage);
     icons.append(noEffectImage->icon());
+
+    // Эффект с простыми кругами
+    BusinessLayer::SimpleCirclesEffectImage* simpleCirclesEffectImage = new BusinessLayer::SimpleCirclesEffectImage();
+    m_effects.append(simpleCirclesEffectImage);
+    icons.append(simpleCirclesEffectImage->icon());
 
     m_view->setupEffectsIcons(icons);
 }

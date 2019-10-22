@@ -1,5 +1,7 @@
 #include "ItemsSlider.h"
 
+#include "_utils/Helpers/UIHelper.h"
+
 #include <QBoxLayout>
 #include <QButtonGroup>
 #include <QPushButton>
@@ -111,4 +113,5 @@ void ItemsSlider::setCurrentIndex(int index)
     m_items->button(index)->setChecked(true);
     m_items->button(index)->setProperty(kPropertyChecked, true);
     m_currentIndex = index;
+    UIHelper::refreshStyleSheet(this);
 }
