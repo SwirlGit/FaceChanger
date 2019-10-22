@@ -4,8 +4,10 @@
 #include "FaceImage.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QString>
-
+#include <QTemporaryDir>
+#include <QDateTime>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -18,17 +20,42 @@ namespace BusinessLayer
 
 OpenCVFaceImageCreator::OpenCVFaceImageCreator()
 {
-    const String face_cascade_name = "/home/user/opencv/data/haarcascades/haarcascade_frontalface_alt.xml";
-    m_faceDetector = new CascadeClassifier();
-    if (!m_faceDetector->load(face_cascade_name)) {
-        logErrorString("Error loading face cascade by path: " + QString::fromUtf8(face_cascade_name.c_str()));
+    QTemporaryDir tempDir;
+    if (!tempDir.isValid()) {
+        logErrorString("Can not create temporary dir for haarcascade files");
         return;
     }
 
-    const String eyes_cascade_name = "/home/user/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml";
+    // Директория с ресурсами для OpenCV
+    const QString resourcesDir = ":/Data/OpenCV";
+
+    // Делаем временную копию файла для определения лица и загружаем
+    const QString faceCascadeName = "haarcascade_frontalface_alt.xml";
+    const QString faceCascadeResourceFileName = resourcesDir + "/" + faceCascadeName;
+    const QString faceCascadeTempFileName = tempDir.path() + "/" + faceCascadeName;
+    if (!QFile::copy(faceCascadeResourceFileName, faceCascadeTempFileName)) {
+        logErrorString(QString("Can not copy face cascade file %1 to temp file %2")
+                       .arg(faceCascadeResourceFileName).arg(faceCascadeTempFileName));
+        return;
+    }
+    m_faceDetector = new CascadeClassifier();
+    if (!m_faceDetector->load(faceCascadeTempFileName.toUtf8().constData())) {
+        logErrorString("Error loading face cascade by path: " + faceCascadeTempFileName);
+        return;
+    }
+
+    // Делаем временную копию файла для определения глаз и загружаем
+    const QString eyesCascadeName = "haarcascade_eye_tree_eyeglasses.xml";
+    const QString eyesCascadeResourceFileName = resourcesDir + "/" + eyesCascadeName;
+    const QString eyesCascadeTempFileName = tempDir.path() + "/" + eyesCascadeName;
+    if (!QFile::copy(eyesCascadeResourceFileName, eyesCascadeTempFileName)) {
+        logErrorString(QString("Can not copy eyes cascade file %1 to temp file %2")
+                       .arg(eyesCascadeResourceFileName).arg(eyesCascadeTempFileName));
+        return;
+    }
     m_eyesDetector = new CascadeClassifier();
-    if (!m_eyesDetector->load(eyes_cascade_name)) {
-        logErrorString("Error loading eyes cascade by path: " + QString::fromUtf8(eyes_cascade_name.c_str()));
+    if (!m_eyesDetector->load(eyesCascadeTempFileName.toUtf8().constData())) {
+        logErrorString("Error loading eyes cascade by path: " + eyesCascadeTempFileName);
         return;
     }
 
@@ -47,6 +74,7 @@ OpenCVFaceImageCreator::~OpenCVFaceImageCreator()
 
 FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
 {
+    qint64 currentMSecs = QDateTime::currentMSecsSinceEpoch();
     // Инициализируем изображение с лицом
     FaceImage faceImage;
     faceImage.setImage(image);
@@ -58,15 +86,21 @@ FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
         return faceImage;
     }
 
+    qDebug() << "Elapsed valid: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
+
     // Переводим наше изображение в GRAY
     Mat imageMat = CVHelper::QImageToMat(faceImage.image());
     Mat frameGray;
     cvtColor(imageMat, frameGray, COLOR_BGR2GRAY);
     equalizeHist(frameGray, frameGray);
 
+    qDebug() << "Elapsed to gray: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
+
     // Находим лица
     std::vector<Rect> faces;
-    m_faceDetector->detectMultiScale(frameGray, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+    m_faceDetector->detectMultiScale(frameGray, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(100, 100));
+
+    qDebug() << "Elapsed to face: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
 
     // Для каждого лица ищем глаза
     for(size_t i = 0; i < faces.size(); ++i) {
@@ -76,6 +110,8 @@ FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
         // Находим глаза
         std::vector<Rect> eyes;
         m_eyesDetector->detectMultiScale(faceROI, eyes, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+
+        qDebug() << "Elapsed to eyes: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
 
         // Формируем лицо с глазами
         Face face({faces[i].x + 0.5 * faces[i].width, faces[i].y + 0.5 * faces[i].height},
@@ -97,6 +133,7 @@ FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
         }
     }
 
+    qDebug() << "Elapsed full: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
     return faceImage;
 }
 

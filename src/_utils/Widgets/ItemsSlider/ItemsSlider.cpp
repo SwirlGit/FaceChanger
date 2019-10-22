@@ -54,7 +54,6 @@ ItemsSlider::ItemsSlider(Qt::Orientation orientation, QWidget *parent) :
             [this] (QAbstractButton* button, bool checked) {
         if (checked) {
             setCurrentIndex(m_items->id(button));
-            emit currentIndexChanged(currentIndex());
         }
     });
 
@@ -114,4 +113,5 @@ void ItemsSlider::setCurrentIndex(int index)
     m_items->button(index)->setProperty(kPropertyChecked, true);
     m_currentIndex = index;
     UIHelper::refreshStyleSheet(this);
+    emit currentIndexChanged(m_currentIndex);
 }

@@ -53,6 +53,11 @@ private slots:
      */
     void processFrame(const QImage& frame);
 
+    /**
+     * @brief Установить текущий эффект
+     */
+    void setCurrentEffect(int index);
+
 private:
     /**
      * @brief Представление приложения
