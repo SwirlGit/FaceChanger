@@ -3,11 +3,11 @@
  */
 
 #itemsSlider QWidget {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 #itemsSlider QPushButton {
-    background-color: rgba(0,0,0,255);
+    background-color: rgba(127, 127, 127, 255);
     border-color: rgba(66, 69, 183, 255);
     border-width: 3px;
     border-style: solid;
