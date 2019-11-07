@@ -2,4 +2,8 @@
     <qresource prefix="/Design">
         <file>UI/stylesheet.qss</file>
     </qresource>
+    <qresource prefix="/Data">
+        <file>OpenCV/haarcascade_eye_tree_eyeglasses.xml</file>
+        <file>OpenCV/haarcascade_frontalface_alt.xml</file>
+    </qresource>
 </RCC>

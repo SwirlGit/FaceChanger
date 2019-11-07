@@ -11,6 +11,7 @@
 #include "ViewLayer/ApplicationView.h"
 
 #include <QIcon>
+#include <QImage>
 #include <QThread>
 
 using ViewLayer::ApplicationView;
@@ -36,6 +37,10 @@ ApplicationManager::ApplicationManager(QObject* parent) :
 
     // настраиваем набор эффектов
     initEffects();
+
+    // настраиваем взаимодействие со view
+    connect(m_view.get(), SIGNAL(currentEffectIndexChanged(int)),
+            this, SLOT(setCurrentEffect(int)));
 
     // запускаем получатель изображений
     m_frameCreatorThread->start();
@@ -81,6 +86,11 @@ void ApplicationManager::processFrame(const QImage& frame)
 {
     const QImage image = m_effects.at(m_currentEffect)->apply(m_faceImageCreator->createFaceImage(frame));
     m_view->updateImage(image);
+}
+
+void ApplicationManager::setCurrentEffect(int index)
+{
+    m_currentEffect = index;
 }
 
 } // namespace ManagementLayer

@@ -33,7 +33,7 @@ ApplicationView::ApplicationView(QWidget* parent) :
     layout->addLayout(itemsSliderLayout);
     setLayout(layout);
 
-    connect(m_pimpl->effects, &ItemsSlider::currentIndexChanged, this, &ApplicationView::currentEffectIndexChanged);
+    connect(m_pimpl->effects, SIGNAL(currentIndexChanged(int)), this, SIGNAL(currentEffectIndexChanged(int)));
 }
 
 ApplicationView::~ApplicationView()
