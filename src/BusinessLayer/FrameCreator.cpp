@@ -43,7 +43,7 @@ OpenCVFrameCreator::~OpenCVFrameCreator()
 void OpenCVFrameCreator::start()
 {
     const qint64 timeAtStartMs = QDateTime::currentMSecsSinceEpoch();
-emit frameCaptured(QImage("c:/test_opencv.jpg"));
+
     // Если устройство не захвачено, сообщаем об этом, пытаемся захватить и планируем повтор через секунду
     if (!m_videoCapture->isOpened()) {
         m_videoCapture->open(m_cameraIndex, CAP_ANY);
