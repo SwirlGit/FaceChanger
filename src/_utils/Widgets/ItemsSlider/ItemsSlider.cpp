@@ -83,6 +83,7 @@ void ItemsSlider::setupItemsIcons(const QVector<QIcon> &icons)
 {
     for (int i = 0; i < icons.size(); ++i) {
         QPushButton* button = new QPushButton(m_scroll);
+        button->setIconSize(button->size());
         button->setIcon(icons[i]);
         button->setCheckable(true);
         m_items->addButton(button, i);

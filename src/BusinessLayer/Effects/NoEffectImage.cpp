@@ -19,8 +19,7 @@ QImage NoEffectImage::apply(const FaceImage& faceImage) const
 
 QIcon NoEffectImage::icon() const
 {
-    // TODO: resource file icon
-    return QIcon();
+    return QIcon(":/Graphics/Icons/Effects/no.svg");
 }
 
 } // namespace BusinessLayer
