@@ -30,12 +30,12 @@ Application::Application(int& argc, char* argv[])
 #ifdef Q_OS_ANDROID
     const QString cameraPermissionName = "android.permission.CAMERA";
     QtAndroid::PermissionResult result = QtAndroid::checkPermission(cameraPermissionName);
-        if (result == QtAndroid::PermissionResult::Denied) {
-            QtAndroid::PermissionResultMap resultHash = QtAndroid::requestPermissionsSync({cameraPermissionName});
-            if (resultHash[cameraPermissionName] == QtAndroid::PermissionResult::Denied) {
-                return;
-            }
+    if (result == QtAndroid::PermissionResult::Denied) {
+        QtAndroid::PermissionResultMap resultHash = QtAndroid::requestPermissionsSync({cameraPermissionName});
+        if (resultHash[cameraPermissionName] == QtAndroid::PermissionResult::Denied) {
+            return;
         }
+    }
 #endif
 
     // Настроим приложение
