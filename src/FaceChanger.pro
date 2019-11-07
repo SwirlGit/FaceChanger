@@ -33,6 +33,7 @@ RCC_DIR = resources
         -lopencv_objdetect412   \
         -lopencv_videoio412
 } else {
+    QT += androidextras
     OPENCV_CHECK = $$(OPENCV_ANDROID)
     isEmpty(OPENCV_CHECK) {
         error("Let OPENCV_ANDROID point to the opencv-android-sdk, using: v4.1.2")

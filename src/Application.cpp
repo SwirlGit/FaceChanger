@@ -9,6 +9,10 @@
 #include <QStyle>
 #include <QStyleFactory>
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#endif
+
 void Application::restart()
 {
     if (QProcess::startDetached(arguments().first(), arguments().mid(1))) {
@@ -22,6 +26,17 @@ Application::Application(int& argc, char* argv[])
     // Настроим информацию о приложении
     setApplicationName("FaceChanger");
     setApplicationVersion("0.1");
+
+#ifdef Q_OS_ANDROID
+    const QString cameraPermissionName = "android.permission.CAMERA";
+    QtAndroid::PermissionResult result = QtAndroid::checkPermission(cameraPermissionName);
+        if (result == QtAndroid::PermissionResult::Denied) {
+            QtAndroid::PermissionResultMap resultHash = QtAndroid::requestPermissionsSync({cameraPermissionName});
+            if (resultHash[cameraPermissionName] == QtAndroid::PermissionResult::Denied) {
+                return;
+            }
+        }
+#endif
 
     // Настроим приложение
     initUI();
