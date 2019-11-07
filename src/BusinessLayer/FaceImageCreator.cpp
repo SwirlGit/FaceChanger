@@ -7,13 +7,19 @@
 #include <QFile>
 #include <QString>
 #include <QTemporaryDir>
-#include <QDateTime>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 
 using namespace cv;
+
+namespace {
+
+// Ширина изображения для поиска лиц
+const double kDetectionWidth = 640;
+
+} // namespace
 
 namespace BusinessLayer
 {
@@ -74,8 +80,6 @@ OpenCVFaceImageCreator::~OpenCVFaceImageCreator()
 
 FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
 {
-    qint64 currentMSecs = QDateTime::currentMSecsSinceEpoch();
-    // Инициализируем изображение с лицом
     FaceImage faceImage;
     faceImage.setImage(image);
 
@@ -86,61 +90,61 @@ FaceImage OpenCVFaceImageCreator::createFaceImage(const QImage& image) const
         return faceImage;
     }
 
-    qDebug() << "Elapsed valid: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
-
     // Переводим наше изображение в GRAY
     Mat imageMat = CVHelper::QImageToMat(faceImage.image());
     Mat frameGray;
     cvtColor(imageMat, frameGray, COLOR_BGR2GRAY);
     equalizeHist(frameGray, frameGray);
 
-    qDebug() << "Elapsed to gray: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
+    // Сожмем изображение для ускорения
+    const double scaleFactor = image.width() > kDetectionWidth ?
+                image.width() / kDetectionWidth :
+                1.0;
+    cv::Mat resizedFrameGray(cvRound(frameGray.rows / scaleFactor), cvRound(frameGray.cols / scaleFactor), CV_8UC1);
+    cv::resize(frameGray, resizedFrameGray, resizedFrameGray.size());
 
     // Находим лица
     std::vector<Rect> faces;
-    m_faceDetector->detectMultiScale(frameGray, faces, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(100, 100));
-
-    qDebug() << "Elapsed to face: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
+    m_faceDetector->detectMultiScale(resizedFrameGray, faces, 1.1, 3, 0 | CASCADE_SCALE_IMAGE, Size(100, 100));
 
     // Для каждого лица ищем глаза
     for(size_t i = 0; i < faces.size(); ++i) {
-        // Выделяем участок с лицом
-        Mat faceROI = frameGray(faces[i]);
-
-        // Находим глаза
+        Mat faceROI = resizedFrameGray(faces[i]);
         std::vector<Rect> eyes;
-        m_eyesDetector->detectMultiScale(faceROI, eyes, 1.1, 2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
+        m_eyesDetector->detectMultiScale(faceROI, eyes, 1.1, 3, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-        qDebug() << "Elapsed to eyes: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
-
-        // Формируем лицо с глазами
+        // Возвращаем исходные величины до сжатия
+        faces[i].x *= scaleFactor;
+        faces[i].y *= scaleFactor;
+        faces[i].width *= scaleFactor;
+        faces[i].height *= scaleFactor;
         Face face({faces[i].x + 0.5 * faces[i].width, faces[i].y + 0.5 * faces[i].height},
                   faces[i].width, faces[i].height);
         for(size_t j = 0; j < eyes.size(); ++j) {
+            eyes[j].x *= scaleFactor;
+            eyes[j].y *= scaleFactor;
+            eyes[j].width *= scaleFactor;
+            eyes[j].height *= scaleFactor;
             Eye eye({faces[i].x + eyes[j].x + 0.5 * eyes[j].width, faces[i].y + eyes[j].y + 0.5 * eyes[j].height},
                     eyes[j].width, eyes[j].height);
             eye.center().x() > face.center().x() ? face.setLeftEye(eye) : face.setRightEye(eye);
         }
         faceImage.addFace(face);
 
-        // В случае, если количество найденных глаз для лица не равно двум, информируем
         if (eyes.size() != 2) {
             logErrorString("Number of found eyes is equal to " + QString::number(eyes.size()));
         }
-        // В случае, если найдены не все глаза - информируем
         if (!face.hasBothEyes()) {
             logErrorString("Did not found both eyes");
         }
     }
-
-    qDebug() << "Elapsed full: " << QDateTime::currentMSecsSinceEpoch() - currentMSecs << "ms" << endl;
     return faceImage;
 }
 
 void OpenCVFaceImageCreator::logErrorString(const QString& errorString) const
 {
     static const QString logPrefix = "OpenCVFaceImageCreator: ";
-    qDebug() << logPrefix << errorString << endl;
+    qDebug() << logPrefix << errorString;
 }
 
 } // namespace BusinessLayer

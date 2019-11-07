@@ -48,7 +48,7 @@ void OpenCVFrameCreator::start()
     if (!m_videoCapture->isOpened()) {
         m_videoCapture->open(m_cameraIndex, CAP_ANY);
         static const QString errorString = "Video device is not opened, can not capture frame";
-        qDebug() << errorString << endl;
+        qDebug() << errorString;
         QTimer::singleShot(kDefaultOpenDeviceRetryTimeout, this, SLOT(start()));
         return;
     }
