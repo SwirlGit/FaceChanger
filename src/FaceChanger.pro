@@ -51,6 +51,18 @@ RCC_DIR = resources
         -lopencv_java4
 
     ANDROID_EXTRA_LIBS = $$(OPENCV_ANDROID)/sdk/native/libs/$$ANDROID_TARGET_ARCH/libopencv_java4.so
+
+    DISTFILES += \
+        Data/android/AndroidManifest.xml \
+        Data/android/gradle/wrapper/gradle-wrapper.jar \
+        Data/android/gradlew \
+        Data/android/res/values/libs.xml \
+        Data/android/build.gradle \
+        Data/android/gradle/wrapper/gradle-wrapper.properties \
+        Data/android/gradlew.bat
+
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/Data/android
 }
 
 
