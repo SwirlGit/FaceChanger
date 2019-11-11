@@ -1,4 +1,4 @@
-#include "FrameCreator.h"
+#include "OpenCVFrameCreator.h"
 
 #include "_utils/Helpers/CVHelper.h"
 
@@ -20,11 +20,6 @@ namespace
 const int kDefaultOpenDeviceRetryTimeout = 1000; // мс
 // коэффициент seconds -> ms
 const int kSecToMs = 1000;
-}
-
-IFrameCreator::IFrameCreator(QObject *parent) :
-    QObject(parent)
-{
 }
 
 OpenCVFrameCreator::OpenCVFrameCreator(int cameraIndex, int fps, QObject *parent) :

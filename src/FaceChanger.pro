@@ -1,4 +1,4 @@
-QT     += core gui widgets
+QT     += core gui widgets multimedia
 CONFIG += c++14
 
 !android: {
@@ -72,7 +72,8 @@ SOURCES += \
     BusinessLayer/Effects/NoEffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
     BusinessLayer/FaceImageCreator.cpp \
-    BusinessLayer/FrameCreator.cpp \
+    BusinessLayer/FrameCreators/OpenCVFrameCreator.cpp \
+    BusinessLayer/FrameCreators/QtMultiMediaFrameCreator.cpp \
     BusinessLayer/Effects/SimpleCirclesEffectImage.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp \
@@ -88,6 +89,8 @@ HEADERS += \
     BusinessLayer/FaceImage.h \
     BusinessLayer/FaceImageCreator.h \
     BusinessLayer/FrameCreator.h \
+    BusinessLayer/FrameCreators/OpenCVFrameCreator.h \
+    BusinessLayer/FrameCreators/QtMultiMediaFrameCreator.h \
     BusinessLayer/IconItem.h \
     BusinessLayer/Effects/SimpleCirclesEffectImage.h \
     ManagementLayer/ApplicationManager.h \

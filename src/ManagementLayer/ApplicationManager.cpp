@@ -8,6 +8,8 @@
 #include "BusinessLayer/FaceImage.h"
 #include "BusinessLayer/FaceImageCreator.h"
 #include "BusinessLayer/FrameCreator.h"
+#include "BusinessLayer/FrameCreators/OpenCVFrameCreator.h"
+#include "BusinessLayer/FrameCreators/QtMultiMediaFrameCreator.h"
 #include "ViewLayer/ApplicationView.h"
 
 #include <QIcon>
@@ -27,7 +29,7 @@ ApplicationManager::ApplicationManager(QObject* parent) :
     m_faceImageCreator = new BusinessLayer::OpenCVFaceImageCreator();
 
     // настраиваем ресивер изображений
-    m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30);
+    m_frameCreator = new BusinessLayer::QtMultiMediaFrameCreator(30);
     m_frameCreatorThread = new QThread;
     m_frameCreator->moveToThread(m_frameCreatorThread);
     connect(m_frameCreator, SIGNAL(frameCaptured(const QImage&)),
