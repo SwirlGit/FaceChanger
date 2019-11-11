@@ -48,7 +48,9 @@ RCC_DIR = resources
         -llibpng \
         -lIlmImf \
         -ltbb \
-        -lopencv_java4 \
+        -lopencv_java4
+
+    ANDROID_EXTRA_LIBS = $$(OPENCV_ANDROID)/sdk/native/libs/$$ANDROID_TARGET_ARCH/libopencv_java4.so
 }
 
 
