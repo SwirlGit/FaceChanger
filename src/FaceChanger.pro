@@ -33,6 +33,7 @@ RCC_DIR = resources
         -lopencv_objdetect412   \
         -lopencv_videoio412
 } else {
+    QT += androidextras
     OPENCV_CHECK = $$(OPENCV_ANDROID)
     isEmpty(OPENCV_CHECK) {
         error("Let OPENCV_ANDROID point to the opencv-android-sdk, using: v4.1.2")
@@ -47,7 +48,21 @@ RCC_DIR = resources
         -llibpng \
         -lIlmImf \
         -ltbb \
-        -lopencv_java4 \
+        -lopencv_java4
+
+    ANDROID_EXTRA_LIBS = $$(OPENCV_ANDROID)/sdk/native/libs/$$ANDROID_TARGET_ARCH/libopencv_java4.so
+
+    DISTFILES += \
+        Data/android/AndroidManifest.xml \
+        Data/android/gradle/wrapper/gradle-wrapper.jar \
+        Data/android/gradlew \
+        Data/android/res/values/libs.xml \
+        Data/android/build.gradle \
+        Data/android/gradle/wrapper/gradle-wrapper.properties \
+        Data/android/gradlew.bat
+
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/Data/android
 }
 
 
