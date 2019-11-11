@@ -36,8 +36,7 @@ QImage SimpleCirclesEffectImage::apply(const FaceImage& faceImage) const
 
 QIcon SimpleCirclesEffectImage::icon() const
 {
-    // TODO: resource file icon
-    return QIcon();
+    return QIcon(":/Graphics/Icons/Effects/simple-circles.svg");
 }
 
 } // namespace BusinessLayer
