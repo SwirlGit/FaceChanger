@@ -52,6 +52,9 @@ RCC_DIR = resources
 
     ANDROID_EXTRA_LIBS = $$(OPENCV_ANDROID)/sdk/native/libs/$$ANDROID_TARGET_ARCH/libopencv_java4.so
 
+    SOURCES += BusinessLayer/FrameCaptures/JavaFrameCapture.cpp
+    HEADERS += BusinessLayer/FrameCaptures/JavaFrameCapture.h
+
     DISTFILES += \
         Data/android/AndroidManifest.xml \
         Data/android/gradle/wrapper/gradle-wrapper.jar \
@@ -59,7 +62,8 @@ RCC_DIR = resources
         Data/android/res/values/libs.xml \
         Data/android/build.gradle \
         Data/android/gradle/wrapper/gradle-wrapper.properties \
-        Data/android/gradlew.bat
+        Data/android/gradlew.bat \
+        Data/android/FrameCapture.JAVA
 
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/Data/android
