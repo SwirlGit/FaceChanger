@@ -1,4 +1,4 @@
-#include "FrameCreator.h"
+#include "OpenCVFrameCapture.h"
 
 #include "_utils/Helpers/CVHelper.h"
 
@@ -22,25 +22,20 @@ const int kDefaultOpenDeviceRetryTimeout = 1000; // мс
 const int kSecToMs = 1000;
 }
 
-IFrameCreator::IFrameCreator(QObject *parent) :
-    QObject(parent)
-{
-}
-
-OpenCVFrameCreator::OpenCVFrameCreator(int cameraIndex, int fps, QObject *parent) :
-    IFrameCreator(parent),
+OpenCVFrameCapture::OpenCVFrameCapture(int cameraIndex, int fps, QObject *parent) :
+    IFrameCapture(parent),
     m_videoCapture(new VideoCapture(cameraIndex, CAP_ANY)),
     m_cameraIndex(cameraIndex),
     m_captureTimeoutMs(kSecToMs / fps)
 {
 }
 
-OpenCVFrameCreator::~OpenCVFrameCreator()
+OpenCVFrameCapture::~OpenCVFrameCapture()
 {
     m_videoCapture->release();
 }
 
-void OpenCVFrameCreator::start()
+void OpenCVFrameCapture::start()
 {
     const qint64 timeAtStartMs = QDateTime::currentMSecsSinceEpoch();
 

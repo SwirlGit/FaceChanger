@@ -7,7 +7,8 @@
 #include "BusinessLayer/Effects/SimpleCirclesEffectImage.h"
 #include "BusinessLayer/FaceImage.h"
 #include "BusinessLayer/FaceImageCreator.h"
-#include "BusinessLayer/FrameCreator.h"
+#include "BusinessLayer/FrameCapture.h"
+#include "BusinessLayer/FrameCaptures/OpenCVFrameCapture.h"
 #include "ViewLayer/ApplicationView.h"
 
 #include <QIcon>
@@ -27,13 +28,13 @@ ApplicationManager::ApplicationManager(QObject* parent) :
     m_faceImageCreator = new BusinessLayer::OpenCVFaceImageCreator();
 
     // настраиваем ресивер изображений
-    m_frameCreator = new BusinessLayer::OpenCVFrameCreator(0, 30);
-    m_frameCreatorThread = new QThread;
-    m_frameCreator->moveToThread(m_frameCreatorThread);
-    connect(m_frameCreator, SIGNAL(frameCaptured(const QImage&)),
+    m_frameCapture = new BusinessLayer::OpenCVFrameCapture(0, 30);
+    m_frameCaptureThread = new QThread;
+    m_frameCapture->moveToThread(m_frameCaptureThread);
+    connect(m_frameCapture, SIGNAL(frameCaptured(const QImage&)),
             this, SLOT(processFrame(const QImage&)));
-    connect(m_frameCreatorThread, &QThread::started,
-            m_frameCreator, &BusinessLayer::IFrameCreator::start);
+    connect(m_frameCaptureThread, &QThread::started,
+            m_frameCapture, &BusinessLayer::IFrameCapture::start);
 
     // настраиваем набор эффектов
     initEffects();
@@ -43,13 +44,13 @@ ApplicationManager::ApplicationManager(QObject* parent) :
             this, SLOT(setCurrentEffect(int)));
 
     // запускаем получатель изображений
-    m_frameCreatorThread->start();
+    m_frameCaptureThread->start();
 }
 
 ApplicationManager::~ApplicationManager()
 {
-    m_frameCreatorThread->exit();
-    delete m_frameCreator;
+    m_frameCaptureThread->exit();
+    delete m_frameCapture;
     delete m_faceImageCreator;
     qDeleteAll(m_effects);
     m_view.release();

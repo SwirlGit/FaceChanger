@@ -11,7 +11,7 @@ namespace BusinessLayer {
 class IEffectImage;
 class FaceImage;
 class IFaceImageCreator;
-class IFrameCreator;
+class IFrameCapture;
 }
 
 namespace ViewLayer {
@@ -82,12 +82,12 @@ private:
     /**
      * @brief Ресивер изображений
      */
-    BusinessLayer::IFrameCreator* m_frameCreator = nullptr;
+    BusinessLayer::IFrameCapture* m_frameCapture = nullptr;
 
     /**
      * @brief Тред для ресивера изображений
      */
-    QThread* m_frameCreatorThread = nullptr;
+    QThread* m_frameCaptureThread = nullptr;
 };
 
 } // namespace ManagementLayer

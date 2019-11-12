@@ -72,7 +72,7 @@ SOURCES += \
     BusinessLayer/Effects/NoEffectImage.cpp \
     BusinessLayer/FaceImage.cpp \
     BusinessLayer/FaceImageCreator.cpp \
-    BusinessLayer/FrameCreator.cpp \
+    BusinessLayer/FrameCaptures/OpenCVFrameCapture.cpp \
     BusinessLayer/Effects/SimpleCirclesEffectImage.cpp \
     ManagementLayer/ApplicationManager.cpp \
     ViewLayer/ApplicationView.cpp \
@@ -87,7 +87,8 @@ HEADERS += \
     BusinessLayer/Effects/NoEffectImage.h \
     BusinessLayer/FaceImage.h \
     BusinessLayer/FaceImageCreator.h \
-    BusinessLayer/FrameCreator.h \
+    BusinessLayer/FrameCapture.h \
+    BusinessLayer/FrameCaptures/OpenCVFrameCapture.h \
     BusinessLayer/IconItem.h \
     BusinessLayer/Effects/SimpleCirclesEffectImage.h \
     ManagementLayer/ApplicationManager.h \
