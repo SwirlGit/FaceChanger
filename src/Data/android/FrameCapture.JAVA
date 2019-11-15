@@ -1,22 +1,15 @@
-package javaframecapture;
+package com.javaframecapture;
 
-static final int REQUEST_CAPTURE_IMAGE = 1;
-
-public class JavaFrameCapture
+public class FrameCapture extends org.qtproject.qt5.android.bindings.QtActivity
 {
-    private static JavaFrameCapture m_instance;
+    static final int REQUEST_CAPTURE_IMAGE = 1;
 
-    public JavaFrameCapture()
+    void captureAnImage()
     {
-        m_instance = this;
+        dispatchTakePictureIntent();
     }
 
-    static void captureAnImage()
-    {
-            dispatchTakePictureIntent();
-    }
-
-    private static void dispatchTakePictureIntent()
+    private void dispatchTakePictureIntent()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -27,21 +20,21 @@ public class JavaFrameCapture
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    protected static void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CAPTURE_IMAGE) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            width = bitmap.getWidth();
-            height = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
             int size = bitmap.getRowBytes() * bitmap.getHeight();
             ByteBuffer byteBuffer = ByteBuffer.allocate(size);
             bitmap.copyPixelsToBuffer(byteBuffer);
-            []byte byteArray = byteBuffer.array();
+            byte[] byteArray = byteBuffer.array();
             imageCaptured(byteArray, width, height);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public static native void imageCaptured([]byte buf, int width, int height);
+    public static native void imageCaptured(byte[] buf, int width, int height);
 }

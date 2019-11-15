@@ -62,8 +62,8 @@ RCC_DIR = resources
         Data/android/res/values/libs.xml \
         Data/android/build.gradle \
         Data/android/gradle/wrapper/gradle-wrapper.properties \
-        Data/android/gradlew.bat \
-        Data/android/FrameCapture.JAVA
+        Data/android/gradlew.bat
+    OTHER_FILES += Data/android/FrameCapture.JAVA
 
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/Data/android

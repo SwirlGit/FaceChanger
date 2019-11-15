@@ -8,6 +8,7 @@
 #include "BusinessLayer/FaceImage.h"
 #include "BusinessLayer/FaceImageCreator.h"
 #include "BusinessLayer/FrameCapture.h"
+#include "BusinessLayer/FrameCaptures/JavaFrameCapture.h"
 #include "BusinessLayer/FrameCaptures/OpenCVFrameCapture.h"
 #include "ViewLayer/ApplicationView.h"
 
@@ -28,7 +29,7 @@ ApplicationManager::ApplicationManager(QObject* parent) :
     m_faceImageCreator = new BusinessLayer::OpenCVFaceImageCreator();
 
     // настраиваем ресивер изображений
-    m_frameCapture = new BusinessLayer::OpenCVFrameCapture(0, 30);
+    m_frameCapture = new BusinessLayer::JavaFrameCapture();
     m_frameCaptureThread = new QThread;
     m_frameCapture->moveToThread(m_frameCaptureThread);
     connect(m_frameCapture, SIGNAL(frameCaptured(const QImage&)),
